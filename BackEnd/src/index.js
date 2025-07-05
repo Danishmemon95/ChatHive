@@ -28,7 +28,8 @@ app.use("/api/messages", messageRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../../FrontEnd/dist")));
 
-  app.get("/*", (req, res) => {
+  // Use a regex to match all routes except those starting with /api
+  app.get(/^\/(?!api).*/, (req, res) => {
     res.sendFile(path.join(__dirname, "../../FrontEnd/dist", "index.html"));
   });
 }
